@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es" translate="no">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Perfil de usuario de Bayora">
+    <title>Perfil - Bayora</title>
+    <link rel="shortcut icon" href="image/inicial.png" />
+    <link href="css/bundle.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/profile.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            width: 80%;
+            max-width: 900px;
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+
+        .logo-container {
+            margin-right: auto;
+        }
+
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-info img {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border: 3px solid #800000; /* Rojo vino */
+            margin-right: 15px;
+            display: none; /* Oculta la imagen por defecto */
+        }
+
+        .profile-info .profile-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #800000; /* Rojo vino */
+            border-radius: 50%;
+            color: white;
+            font-size: 40px;
+            margin-right: 15px;
+        }
+
+        .profile-info div {
+            text-align: left;
+        }
+
+        .profile-info h2 {
+            margin: 0;
+            font-size: 18px;
+            color: #000;
+        }
+
+        .profile-info p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .header .menu-container {
+            position: relative;
+            margin-left: 20px;
+        }
+
+        .menu-container .menu-button {
+            cursor: pointer;
+            font-size: 24px;
+            color: #800000; /* Rojo vino */
+        }
+
+        .menu-container .menu-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            width: 150px;
+            z-index: 1000;
+        }
+
+        .menu-container .menu-dropdown a {
+            display: block;
+            padding: 10px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .menu-container .menu-dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        .menu-container .menu-dropdown a:hover {
+            background: #f4f4f4;
+        }
+
+        .main-content {
+            padding-top: 80px;
+        }
+
+        .fixed-options {
+            position: fixed;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            width: 200px;
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        .fixed-options a {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .fixed-options a:last-child {
+            border-bottom: none;
+        }
+
+        .fixed-options a:hover {
+            background: #f4f4f4;
+        }
+
+        .fixed-options i {
+            margin-right: 10px;
+        }
+
+        /* Estilos para el modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 4px;
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Estilos adicionales para el formulario en el modal */
+        #settingsForm {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #settingsForm label {
+            margin-top: 10px;
+        }
+
+        #settingsForm input,
+        #settingsForm select {
+            margin-top: 5px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        #settingsForm button {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #800000; /* Rojo vino */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #settingsForm button:hover {
+            background-color: #4d0000; /* Un tono más oscuro de rojo vino */
+        }
+
+        /* Imagen en la parte inferior derecha */
+        .bottom-right-image {
+            position: fixed;
+            bottom: 20px; /* Ajusta la distancia desde el borde inferior */
+            right: 20px; /* Ajusta la distancia desde el borde derecho */
+            z-index: 1000;
+        }
+
+        .bottom-right-image img {
+            max-width: 100px;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo-container">
+            <img src="image/ASD3.png" alt="Logo de Bayora">
+        </div>
+        <div class="profile-info">
+            <div class="profile-icon"><i class="fas fa-user"></i></div>
+            <img src="image/profile-placeholder.png" alt="Foto de Perfil" id="profilePicture">
+            <div>
+                <h2 id="fullName">Nombre Completo</h2>
+                <p id="username">Usuario</p>
+            </div>
+        </div>
+        <div class="menu-container">
+            <div class="menu-button" id="menuButton">⋮</div>
+            <div class="menu-dropdown" id="menuDropdown">
+                <a href="Configuracion.html" id="settingsOption">Configuración</a>
+                <a href="#" id="darkModeOption">Modo Nocturno</a>
+                <a href="#" id="logoutOption">Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <!-- Aquí puedes agregar el contenido adicional de la página -->
+    </div>
+
+    <div class="fixed-options">
+        <a href="perfil.html"><i class="fas fa-home"></i> INICIO</a>
+        <a href="pagos.html"><i class="fas fa-credit-card"></i> PAGOS</a>
+        <a href="encuestas.html"><i class="fas fa-poll"></i> ENCUESTAS</a>
+        <a href="#"><i class="fas fa-calendar-alt"></i> HORARIOS</a>
+        <a href="informacion.html"><i class="fas fa-info-circle"></i> INFORMACIÓN</a>
+        <a href="amigos.html"><i class="fas fa-users"></i> AMIGOS</a>
+
+
+    </div>
+
+    <!-- Imagen en la parte inferior derecha -->
+    <div class="bottom-right-image">
+        <a href="bayora.html">
+            <img src="image/FOND.png" alt="Imagen en la parte inferior derecha">
+        </a>
+    </div>
+
+    <!-- Modal de configuración -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeModal">&times;</span>
+            <h2>Configuración</h2>
+            <form id="settingsForm">
+                <!-- Campos de configuración aquí -->
+                <label for="username">Nombre de Usuario:</label>
+                <input type="text" id="usernameInput" name="username" required>
+
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="emailInput" name="email" required>
+
+                <label for="language">Idioma:</label>
+                <select id="languageInput" name="language">
+                    <option value="es">Español</option>
+                    <option value="en">Inglés</option>
+                </select>
+
+                <button type="submit">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const username = localStorage.getItem('username');
+            const validCredentials = JSON.parse(localStorage.getItem('validCredentials') || '[]');
+            const user = validCredentials.find(cred => cred.username === username);
+
+            if (user) {
+                document.getElementById('fullName').textContent = `${user.fullName} ${user.surname}`;
+                document.getElementById('username').textContent = username;
+                const profileImg = document.querySelector('.profile-info img');
+                const profileIcon = document.querySelector('.profile-info .profile-icon');
+                if (user.profilePicture) {
+                    profileImg.src = user.profilePicture;
+                    profileImg.style.display = 'block';
+                    profileIcon.style.display = 'none';
+                } else {
+                    profileImg.style.display = 'none';
+                    profileIcon.style.display = 'flex';
+                }
+            } else {
+                window.location.href = 'login.html'; // Redirige si no se encuentra el usuario
+            }
+        });
+
+        document.getElementById('menuButton').addEventListener('click', function () {
+            const dropdown = document.getElementById('menuDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        });
+
+        document.getElementById('settingsOption').addEventListener('click', function () {
+            document.getElementById('settingsModal').style.display = 'block';
+        });
+
+        document.getElementById('closeModal').addEventListener('click', function () {
+            document.getElementById('settingsModal').style.display = 'none';
+        });
+
+        document.getElementById('logoutOption').addEventListener('click', function () {
+            localStorage.removeItem('username');
+            localStorage.removeItem('validCredentials');
+            window.location.href = 'login.html';
+        });
+
+        window.addEventListener('click', function (event) {
+            if (event.target === document.getElementById('settingsModal')) {
+                document.getElementById('settingsModal').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

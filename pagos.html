@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es" translate="no">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sección de Pagos - Bayora">
+    <title>Pagos - Bayora</title>
+    <link rel="shortcut icon" href="image/inicial.png" />
+    <link href="css/bundle.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/profile.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .main-content {
+            padding-top: 80px;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .amount-display {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #800000; /* Rojo vino */
+        }
+
+        .amount-display .symbol {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+
+        .amount-display .amount {
+            font-size: 28px;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section h2 {
+            font-size: 24px;
+            color: #800000; /* Rojo vino */
+            margin-bottom: 10px;
+        }
+
+        .section p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .section form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section form label {
+            margin-top: 10px;
+        }
+
+        .section form input,
+        .section form select {
+            margin-top: 5px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .section form button {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #800000; /* Rojo vino */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .section form button:hover {
+            background-color: #4d0000; /* Un tono más oscuro de rojo vino */
+        }
+
+        .fixed-options {
+            position: fixed;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            width: 200px;
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        .fixed-options a {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .fixed-options a:last-child {
+            border-bottom: none;
+        }
+
+        .fixed-options a:hover {
+            background: #f4f4f4;
+        }
+
+        .fixed-options i {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <div class="amount-display">
+            <div class="symbol">S/</div>
+            <div class="amount">0.00</div>
+        </div>
+
+        <div class="section">
+            <h2>Realizar Pago</h2>
+            <p>Complete el siguiente formulario para procesar su pago.</p>
+            <form action="/procesar_pago" method="POST">
+                <label for="amount">Monto</label>
+                <input type="number" id="amount" name="amount" required>
+
+                <label for="paymentMethod">Método de Pago</label>
+                <select id="paymentMethod" name="paymentMethod" required>
+                    <option value="credit_card">Tarjeta de Crédito</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="bank_transfer">Transferencia Bancaria</option>
+                </select>
+
+                <label for="details">Detalles Adicionales</label>
+                <input type="text" id="details" name="details">
+
+                <button type="submit">Pagar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Opciones fijas en la parte izquierda y en el centro verticalmente -->
+    <div class="fixed-options">
+        <a href="perfil.html"><i class="fas fa-home"></i> INICIO</a>
+        <a href="pagos.html"><i class="fas fa-credit-card"></i> PAGOS</a>
+        <a href="encuestas.html"><i class="fas fa-poll"></i> ENCUESTAS</a>
+        <a href="#"><i class="fas fa-calendar-alt"></i> HORARIOS</a>
+        <a href="informacion.html"><i class="fas fa-info-circle"></i> INFORMACIÓN</a>
+        <a href="amigos.html"><i class="fas fa-users"></i> AMIGOS</a>
+
+    </div>
+</body>
+</html>

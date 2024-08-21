@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es" translate="no">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Configuración de usuario de Bayora">
+    <title>Configuración - Bayora</title>
+    <link rel="stylesheet" href="css/profile.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos del cuerpo */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Estilos del contenedor principal */
+        .main-container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Estilos de las columnas */
+        .left-column, .right-column {
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .left-column {
+            width: 30%;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-right: 20px;
+            text-align: center;
+        }
+
+        .right-column {
+            width: 70%;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .left-column .profile-info img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            border: 2px solid #ddd;
+        }
+
+        .left-column .profile-info h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #800000; /* Rojo vino */
+        }
+
+        .right-column h2 {
+            margin-top: 0;
+            color: #800000; /* Rojo vino */
+        }
+
+        .right-column label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .right-column input[type="text"], .right-column input[type="password"], .right-column input[type="file"] {
+            width: calc(100% - 16px); /* Ajuste para el padding */
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .right-column button {
+            padding: 10px;
+            background-color: #800000; /* Rojo vino */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .right-column button:hover {
+            background-color: #4d0000; /* Tono más oscuro de rojo vino */
+        }
+
+        .profile-preview {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-top: 10px;
+            border: 2px solid #ddd; /* Borde sutil */
+        }
+
+        .profile-details div {
+            margin-bottom: 10px;
+        }
+
+        .profile-details input {
+            width: calc(100% - 16px); /* Ajuste para el padding */
+            margin-bottom: 5px;
+        }
+
+        /* Opciones fijas */
+        .fixed-options {
+            position: fixed;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            width: 200px;
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        .fixed-options a {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .fixed-options a:last-child {
+            border-bottom: none;
+        }
+
+        .fixed-options a:hover {
+            background: #f4f4f4;
+        }
+
+        .fixed-options i {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Opciones fijas en la parte izquierda y en el centro verticalmente -->
+    <div class="fixed-options">
+        <a href="perfil.html"><i class="fas fa-home"></i> INICIO</a>
+        <a href="pagos.html"><i class="fas fa-credit-card"></i> PAGOS</a> <!-- Actualizado aquí -->
+        <a href="encuestas.html"><i class="fas fa-poll"></i> ENCUESTAS</a>
+        <a href="#"><i class="fas fa-calendar-alt"></i> HORARIOS</a>
+        <a href="informacion.html"><i class="fas fa-info-circle"></i> INFORMACIÓN</a>
+
+        <a href="#"><i class="fas fa-users"></i> AMIGOS</a>
+    </div>
+
+    <div class="main-container">
+        <!-- Columna izquierda -->
+        <div class="left-column">
+            <div class="profile-info">
+                <img id="profilePreview" class="profile-preview" src="" alt="Foto de Perfil" />
+                <h3 id="fullNameDisplay">Nombre Completo</h3>
+            </div>
+            <div class="profile-details">
+                <div>
+                    <label for="schoolInput">Escuela Profesional:</label>
+                    <input type="text" id="schoolInput" placeholder="Escuela Profesional" />
+                </div>
+                <div>
+                    <label for="emailInput">Correo Personal:</label>
+                    <input type="text" id="emailInput" placeholder="Correo Personal" />
+                </div>
+                <div>
+                    <label for="phoneInput">Teléfono:</label>
+                    <input type="text" id="phoneInput" placeholder="Teléfono" />
+                </div>
+                <div>
+                    <label for="departmentInput">Departamento:</label>
+                    <input type="text" id="departmentInput" placeholder="Departamento" />
+                </div>
+                <div>
+                    <label for="provinceInput">Provincia:</label>
+                    <input type="text" id="provinceInput" placeholder="Provincia" />
+                </div>
+                <div>
+                    <label for="districtInput">Distrito:</label>
+                    <input type="text" id="districtInput" placeholder="Distrito" />
+                </div>
+                <div>
+                    <label for="addressInput">Dirección:</label>
+                    <input type="text" id="addressInput" placeholder="Dirección" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna derecha -->
+        <div class="right-column">
+            <h2>Configuración del Perfil</h2>
+            <form id="settingsForm">
+                <div>
+                    <label for="fullNameInput">Nombre Completo:</label>
+                    <input type="text" id="fullNameInput" placeholder="Nombre Completo" />
+                </div>
+                <div>
+                    <label for="usernameInput">Nombre de Usuario:</label>
+                    <input type="text" id="usernameInput" placeholder="Nombre de Usuario" />
+                </div>
+                <div>
+                    <label for="profilePictureInput">Foto de Perfil:</label>
+                    <input type="file" id="profilePictureInput" accept="image/*" />
+                </div>
+                <div>
+                    <label for="currentPassword">Contraseña Actual:</label>
+                    <input type="password" id="currentPassword" placeholder="Contraseña Actual" />
+                </div>
+                <div>
+                    <label for="newPassword">Nueva Contraseña:</label>
+                    <input type="password" id="newPassword" placeholder="Nueva Contraseña" />
+                </div>
+                <button type="submit">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const username = localStorage.getItem('username');
+            const validCredentials = JSON.parse(localStorage.getItem('validCredentials') || '[]');
+            const user = validCredentials.find(cred => cred.username === username);
+
+            if (user) {
+                document.getElementById('fullNameInput').value = `${user.fullName} ${user.surname}`;
+                document.getElementById('usernameInput').value = username;
+                const profileImg = document.getElementById('profilePreview');
+                const fullNameDisplay = document.getElementById('fullNameDisplay');
+                if (user.profilePicture) {
+                    profileImg.src = user.profilePicture;
+                }
+                fullNameDisplay.textContent = `${user.fullName} ${user.surname}`;
+                document.getElementById('schoolInput').value = user.professionSchool || '';
+                document.getElementById('emailInput').value = user.email || '';
+                document.getElementById('phoneInput').value = user.phoneNumber || '';
+                document.getElementById('departmentInput').value = user.department || '';
+                document.getElementById('provinceInput').value = user.province || '';
+                document.getElementById('districtInput').value = user.district || '';
+                document.getElementById('addressInput').value = user.address || '';
+            }
+
+            document.getElementById('settingsForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const fullName = document.getElementById('fullNameInput').value;
+                const newUsername = document.getElementById('usernameInput').value;
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const profilePictureInput = document.getElementById('profilePictureInput').files[0];
+
+                if (profilePictureInput) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        localStorage.setItem('userProfilePicture', e.target.result);
+                    };
+                    reader.readAsDataURL(profilePictureInput);
+                }
+
+                const updatedUser = validCredentials.find(cred => cred.username === username);
+                if (updatedUser) {
+                    updatedUser.fullName = fullName.split(' ')[0];
+                    updatedUser.surname = fullName.split(' ')[1] || '';
+                    updatedUser.username = newUsername || username;
+                    updatedUser.profilePicture = localStorage.getItem('userProfilePicture') || updatedUser.profilePicture;
+                    // Handle password change logic if needed
+                    localStorage.setItem('validCredentials', JSON.stringify(validCredentials));
+                }
+
+                alert('Cambios guardados con éxito');
+            });
+        });
+    </script>
+</body>
+
+</html>

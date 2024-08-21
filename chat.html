@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es" translate="no">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Chat Bayora">
+    <title>Chat - Bayora</title>
+</head>
+<body>
+    <script>
+        // Simular la respuesta a la solicitud del mensaje
+        addEventListener('fetch', event => {
+            if (event.request.method === 'POST') {
+                event.respondWith(
+                    (async () => {
+                        const data = await event.request.json();
+                        let reply = 'No entiendo';
+
+                        if (data.message.toLowerCase() === 'hola') {
+                            const currentHour = new Date().getHours();
+                            let timeOfDay;
+
+                            if (currentHour < 12) {
+                                timeOfDay = 'Buenos días';
+                            } else if (currentHour < 18) {
+                                timeOfDay = 'Buenas tardes';
+                            } else {
+                                timeOfDay = 'Buenas noches';
+                            }
+
+                            reply = `Hola, ${timeOfDay}! Soy Bayora. ¿En qué puedo ayudarte hoy?`;
+                        }
+
+                        return new Response(JSON.stringify({ reply }), {
+                            headers: { 'Content-Type': 'application/json' }
+                        });
+                    })().catch(() => new Response('Error processing request', { status: 500 }))
+                );
+            } else {
+                event.respondWith(new Response('Method not allowed', { status: 405 }));
+            }
+        });
+    </script>
+</body>
+</html>

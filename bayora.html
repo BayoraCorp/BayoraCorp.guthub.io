@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es" translate="no">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Chat Bayora">
+    <title>Chat - Bayora</title>
+    <link rel="shortcut icon" href="image/inicial.png" />
+    <link href="css/bundle.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/chat.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #202123;
+            color: #dbe2ef;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #111213;
+            color: #dbe2ef;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: fixed;
+            overflow-y: auto;
+            transition: width 0.3s;
+            position: relative;
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+        }
+
+        .sidebar .logo {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .logo img.expanded {
+            display: block;
+        }
+
+        .sidebar.collapsed .logo img.expanded {
+            display: none;
+        }
+
+        .sidebar .logo img.collapsed {
+            display: none;
+        }
+
+        .sidebar.collapsed .logo img.collapsed {
+            display: block;
+        }
+
+        .sidebar a {
+            color: #dbe2ef;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+        }
+
+        .sidebar.collapsed a {
+            justify-content: center;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .sidebar.collapsed a span {
+            display: none;
+        }
+
+        .sidebar a:hover {
+            background-color: #33373e;
+        }
+
+        .sidebar .toggle-btn {
+            background: #800020;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            right: -20px;
+            transform: translateY(-50%);
+            transition: right 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar.collapsed .toggle-btn {
+            right: -20px;
+        }
+
+        .sidebar .toggle-btn:hover {
+            background-color: #4d0000;
+        }
+
+        .chat-container {
+            margin-left: 250px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #1e1e1e;
+            height: 100%;
+            border-left: 1px solid #333;
+            transition: margin-left 0.3s;
+        }
+
+        .sidebar.collapsed ~ .chat-container {
+            margin-left: 80px;
+        }
+
+        .chat-header {
+            background-color: #111213;
+            color: #dbe2ef;
+            padding: 15px;
+            font-size: 18px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #2e2e2e;
+            border-bottom: 1px solid #333;
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+
+        .chat-message p {
+            margin: 0;
+            padding: 8px 12px;
+            background: #3b3b3b;
+            border-radius: 12px;
+            max-width: 75%;
+            word-break: break-word;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        .chat-message.user p {
+            background: #800020;
+            color: #fff;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #333;
+            background: #2e2e2e;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-input input {
+            max-width: 500px;
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 20px;
+            background: #1e1e1e;
+            color: #dbe2ef;
+            font-size: 16px;
+            outline: none;
+            box-shadow: none;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input input:focus {
+            border-color: #800020;
+        }
+
+        .chat-input button {
+            padding: 12px 20px;
+            background-color: #800020;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .chat-input button:hover {
+            background-color: #4d0000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <img src="image/1.png" alt="Logo Expandido" class="expanded">
+            <img src="image/2.png" alt="Logo Contraído" class="collapsed">
+        </div>
+        <button class="toggle-btn" id="toggleBtn"><i class="fas fa-chevron-left"></i></button>
+        <a href="perfil.html"><i class="fas fa-home"></i><span>INICIO</span></a>
+        <a href="pagos.html"><i class="fas fa-credit-card"></i><span>PAGOS</span></a>
+        <a href="encuestas.html"><i class="fas fa-poll"></i><span>ENCUESTAS</span></a>
+        <a href="horarios.html"><i class="fas fa-calendar-alt"></i><span>HORARIOS</span></a>
+        <a href="informacion.html"><i class="fas fa-info-circle"></i><span>INFORMACIÓN</span></a>
+        <a href="amigos.html"><i class="fas fa-users"></i><span>AMIGOS</span></a>
+    </div>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            Chat con Bayora
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <!-- Mensajes del chat irán aquí -->
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Escribe un mensaje..." />
+            <button id="sendButton"><i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('sendButton').addEventListener('click', function() {
+            const chatMessages = document.getElementById('chatMessages');
+            const chatInput = document.getElementById('chatInput');
+            const messageText = chatInput.value.trim();
+            
+            if (messageText) {
+                // Agregar el mensaje del usuario al chat
+                const userMessageElement = document.createElement('div');
+                userMessageElement.className = 'chat-message user';
+                userMessageElement.innerHTML = `<p>${messageText}</p>`;
+                chatMessages.appendChild(userMessageElement);
+    
+                // Limpiar el campo de entrada
+                chatInput.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight; // Desplazar hacia abajo
+    
+                // Responder automáticamente
+                handleResponse(messageText);
+            }
+        });
+    
+        document.getElementById('chatInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                document.getElementById('sendButton').click();
+            }
+        });
+    
+        document.getElementById('toggleBtn').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleIcon = document.querySelector('#toggleBtn i');
+            sidebar.classList.toggle('collapsed');
+            toggleIcon.classList.toggle('fa-chevron-left');
+            toggleIcon.classList.toggle('fa-chevron-right');
+        });
+    
+        function handleResponse(message) {
+            const responses = {
+                "saludo": [
+                    "Hola, ¿cómo estás?",
+                    "¡Hola! ¿Qué tal tu día?",
+                    "Hola, ¿cómo puedo asistirte hoy?",
+                    // Más respuestas de saludo
+                ],
+                "despedida": [
+                    "Adiós, ¡que tengas un buen día!",
+                    "Hasta luego, cuídate.",
+                    "Nos vemos pronto, ¡que tengas un excelente día!",
+                    // Más respuestas de despedida
+                ],
+                "agradecimiento": [
+                    "¡De nada! ¿Hay algo más en lo que pueda ayudarte?",
+                    "No hay de qué, estoy aquí para ayudar.",
+                    "¡Un placer! Si necesitas algo más, solo dímelo.",
+                    // Más respuestas de agradecimiento
+                ],
+                "informacion": [
+                    "¿Qué tipo de información necesitas?",
+                    "¿Sobre qué tema te gustaría saber más?",
+                    "Puedes preguntarme sobre cualquier cosa relacionada con nuestro servicio.",
+                    // Más respuestas de información
+                ],
+                "default": [
+                    "Lo siento, no entendí tu mensaje.",
+                    "No estoy seguro de cómo responder a eso.",
+                    "Podrías repetirlo o preguntarme otra cosa.",
+                    // Más respuestas predeterminadas
+                ],
+                // Agrega nuevas categorías aquí
+                "ejemplo": [
+                    "Esta es una respuesta de ejemplo.",
+                    "¿Cómo puedo ayudarte con el ejemplo?",
+                    // Más respuestas para la categoría de ejemplo
+                ],
+                "Bayora": [
+                    "ayora es una corporación futuro líder en el sector biotecnologico, dedicada a produccion de farmacos. Fundada en 2021 despues de una pandemia, nuestra misión es transformar el panorama tecnológico a través de la excelencia en el servicio y la innovación continua.¿te gustaria saber algo al respecto?",
+                    "¿Cómo puedo ayudarte con el ejemplo?",
+                    // Más respuestas para la categoría de ejemplo
+             
+                ]
+          
+            };
+    
+            const variants = {
+                saludo: [
+        "hola", "ola", "holaa", "hol", "holas",
+       "habla","que hay","olo","que onda","holis","holi","hi","Hola","HOLA"
+    ],
+                despedida: ["adiós", "hasta luego", "nos vemos", "chau"],
+                agradecimiento: ["gracias", "te lo agradezco", "mil gracias"],
+                informacion: ["info", "información", "dime más", "cuéntame"],
+                Bayora: ["quiero saber que es bayora","dame info de bayora"],
+                // Agrega nuevas variantes aquí
+                ejemplo: ["ejemplo", "demostración", "prueba"]
+            };
+    
+            function matchVariants(message) {
+                const normalizedMessage = message.trim().toLowerCase();
+                for (const [key, keywords] of Object.entries(variants)) {
+                    if (keywords.some(keyword => normalizedMessage.includes(keyword))) {
+                        return key;
+                    }
+                }
+                return "default";
+            }
+    
+            const messageText = message.trim().toLowerCase();
+            const responseType = matchVariants(messageText);
+            const responseText = responses[responseType][Math.floor(Math.random() * responses[responseType].length)];
+    
+            // Agregar la respuesta del bot al chat
+            const chatMessages = document.getElementById('chatMessages');
+            const botMessageElement = document.createElement('div');
+            botMessageElement.className = 'chat-message bot';
+            botMessageElement.innerHTML = `<p>${responseText}</p>`;
+            chatMessages.appendChild(botMessageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Desplazar hacia abajo
+        }
+    </script>
+    
+</body>
+
+</html>

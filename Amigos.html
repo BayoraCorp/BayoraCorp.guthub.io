@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es" translate="no">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Lista de amigos de Bayora">
+    <title>Amigos - Bayora</title>
+    <link rel="shortcut icon" href="image/inicial.png" />
+    <link href="css/bundle.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/profile.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            width: 80%;
+            max-width: 900px;
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+
+        .logo-container {
+            margin-right: auto;
+        }
+
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+        }
+
+        .main-content {
+            padding-top: 80px;
+            width: 80%;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .friend-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .friend-list li {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .friend-list img {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        .friend-list .friend-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .friend-list .friend-info h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #000;
+        }
+
+        .friend-list .friend-info p {
+            margin: 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .bottom-right-image {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .bottom-right-image img {
+            max-width: 100px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .fixed-options {
+            position: fixed;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            width: 200px;
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        .fixed-options a {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .fixed-options a:last-child {
+            border-bottom: none;
+        }
+
+        .fixed-options a:hover {
+            background: #f4f4f4;
+        }
+
+        .fixed-options i {
+            margin-right: 10px;
+        }
+
+        .top-right-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            padding: 10px;
+            z-index: 1000;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .top-right-icon i {
+            font-size: 20px;
+            color: #333;
+        }
+
+        .top-right-icon span {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .friend-list-container {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            width: 300px;
+            z-index: 1000;
+            padding: 10px;
+        }
+
+        .friend-list-container ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .friend-list-container li {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .friend-list-container img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .friend-list-container .friend-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .friend-list-container .friend-info h3 {
+            margin: 0;
+            font-size: 14px;
+            color: #000;
+        }
+
+        .friend-list-container .friend-info p {
+            margin: 0;
+            font-size: 12px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo-container">
+            <img src="image/ASD3.png" alt="Logo de Bayora">
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h1>Amigos</h1>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Buscar amigos...">
+        </div>
+
+        <ul class="friend-list" id="friendList">
+            <!-- Lista de amigos se cargará aquí -->
+        </ul>
+    </div>
+
+    <!-- Opciones fijas en la barra lateral -->
+    <div class="fixed-options">
+        <a href="perfil.html"><i class="fas fa-home"></i> INICIO</a>
+        <a href="pagos.html"><i class="fas fa-credit-card"></i> PAGOS</a>
+        <a href="encuestas.html"><i class="fas fa-poll"></i> ENCUESTAS</a>
+        <a href="#"><i class="fas fa-calendar-alt"></i> HORARIOS</a>
+        <a href="informacion.html"><i class="fas fa-info-circle"></i> INFORMACIÓN</a>
+        <a href="amigos.html"><i class="fas fa-users"></i> AMIGOS</a>
+    </div>
+
+    <!-- Icono y etiqueta en la parte superior derecha -->
+    <div class="top-right-icon" id="toggleFriends">
+        <i class="fas fa-user-friends"></i>
+        <span>Mis amigos</span>
+    </div>
+
+    <!-- Contenedor para la lista de amigos -->
+    <div class="friend-list-container" id="friendsContainer">
+        <ul id="friendListDropdown">
+            <!-- Lista de amigos se cargará aquí -->
+        </ul>
+    </div>
+
+    <!-- Imagen en la parte inferior derecha -->
+    <div class="bottom-right-image">
+        <a href="bayora.html">
+            <img src="image/FOND.png" alt="Imagen en la parte inferior derecha">
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const friends = [
+                { name: 'Juan Pérez', username: 'juanp', profilePicture: 'image/friend1.jpg' },
+                { name: 'Ana López', username: 'anal', profilePicture: 'image/friend2.jpg' },
+                { name: 'Carlos García', username: 'carlosg', profilePicture: 'image/friend3.jpg' },
+                // Agrega más amigos aquí
+            ];
+
+            const friendList = document.getElementById('friendList');
+            const friendListDropdown = document.getElementById('friendListDropdown');
+            const friendsContainer = document.getElementById('friendsContainer');
+            const toggleFriends = document.getElementById('toggleFriends');
+
+            function renderFriends(friends, container) {
+                container.innerHTML = '';
+                friends.forEach(friend => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <img src="${friend.profilePicture}" alt="${friend.name}">
+                        <div class="friend-info">
+                            <h3>${friend.name}</h3>
+                            <p>@${friend.username}</p>
+                        </div>
+                    `;
+                    container.appendChild(li);
+                });
+            }
+
+            function updateFriendsList() {
+                renderFriends(friends, friendList);
+                renderFriends(friends, friendListDropdown);
+                if (friends.length > 0) {
+                    friendsContainer.style.display = 'none'; // Initially hidden
+                } else {
+                    friendsContainer.style.display = 'none';
+                }
+            }
+
+            updateFriendsList();
+
+            document.getElementById('searchInput').addEventListener('input', function () {
+                const query = this.value.toLowerCase();
+                const filteredFriends = friends.filter(friend =>
+                    friend.name.toLowerCase().includes(query) || friend.username.toLowerCase().includes(query)
+                );
+                renderFriends(filteredFriends, friendList);
+            });
+
+            toggleFriends.addEventListener('click', function () {
+                if (friends.length > 0) {
+                    friendsContainer.style.display = friendsContainer.style.display === 'block' ? 'none' : 'block';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

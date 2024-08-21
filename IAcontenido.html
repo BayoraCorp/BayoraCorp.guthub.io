@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IA Contenido</title>
+</head>
+<body>
+    <script>
+        // Leer el mensaje enviado
+        const urlParams = new URLSearchParams(window.location.search);
+        const userMessage = urlParams.get('message');
+
+        // Respuesta simulada
+        let response = "No se recibió ningún mensaje.";
+
+        if (userMessage) {
+            if (userMessage.toLowerCase() === "hola") {
+                response = "¡Hola! ¿Cómo puedo ayudarte?";
+            } else {
+                response = `Respuesta simulada para: ${userMessage}`;
+            }
+        }
+
+        document.write(response); // Enviar la respuesta como texto
+    </script>
+</body>
+</html>
